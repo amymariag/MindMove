@@ -19,20 +19,27 @@ struct ContentView: View {
             .buttonStyle(.borderedProminent)
         }
         .padding()
-        .background(LinearGradient(colors: [.mint.opacity(0.2), .blue.opacity(0.2)], startPoint: .top, endPoint: .bottom))
+        .background(
+            LinearGradient(colors: [.mint.opacity(0.15), .blue.opacity(0.25)],
+                           startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+        )
     }
 }
 
 struct StreakRing: View {
-    let progress: Double // 0‒1
+    let progress: Double // 0 … 1
 
     var body: some View {
         ZStack {
-            Circle()
-                .stroke(.gray.opacity(0.2), lineWidth: 20)
+            Circle().stroke(.gray.opacity(0.20), lineWidth: 20)
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(AngularGradient(gradient: .init(colors: [.green, .yellow, .orange]), center: .center), style: StrokeStyle(lineWidth: 20, lineCap: .round))
+                .stroke(
+                    AngularGradient(gradient: .init(colors: [.green, .yellow, .orange, .red]),
+                                     center: .center),
+                    style: StrokeStyle(lineWidth: 20, lineCap: .round)
+                )
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut(duration: 0.4), value: progress)
             Text("\(Int(progress * 100))%")
